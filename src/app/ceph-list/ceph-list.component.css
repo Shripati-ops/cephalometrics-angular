@@ -1,0 +1,45 @@
+.content-card,
+.cephalometric-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 10px);
+  margin: 0 auto;
+  width: 96%;
+}
+.content-card > mat-card-title,
+.cephalometric-card > mat-card-title {
+  font-size: 1rem;
+  text-align: start;
+  margin: 0%;
+}
+
+.content-card {
+  height: 70%;
+}
+
+.cephalometric-canvas {
+  position: absolute;
+  top: 100%;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.example-card {
+  max-width: 400px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: space-between;
+  justify-content: center;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  row-gap: 10px;
+}/*# sourceMappingURL=ceph-list.component.css.map */

@@ -1,0 +1,89 @@
+.sidebar {
+  /* height: 30rem; */
+  height: 50rem;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  /* background: #f1f1f1; */
+  background: #f8f9fa;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.reload-btn {
+  height: 15px;
+  width: 15px;
+}
+
+input[type=checkbox] {
+  background-color: orange;
+}
+
+.middle-img {
+  height: 30rem;
+  width: 26.7rem;
+}
+
+.nav-btn {
+  width: 6rem;
+}
+
+.right-side-img {
+  height: 39rem;
+  width: 40rem;
+}
+
+.link-btns {
+  color: black;
+  font-weight: 500;
+  margin-left: 0.5rem;
+  text-decoration: none;
+}
+
+.link-btns-disabled {
+  color: orange;
+  font-weight: 500;
+  margin-left: 0.5rem;
+  text-decoration: none;
+}
+
+.checkbox-btns {
+  background-color: orange !important;
+}
+
+.btn-bg {
+  background-color: #d5d5d5;
+}
+
+.action-div {
+  width: 39.4rem;
+  margin-left: 20px;
+}
+
+.last-div {
+  height: 40.5rem;
+}
+
+.sidebar-div {
+  height: 43.5rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .card-body {
+    width: 3rem;
+  }
+}/*# sourceMappingURL=ceph-lib.component.css.map */

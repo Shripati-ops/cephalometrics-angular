@@ -1,0 +1,6 @@
+{
+  "mongooseUrl": {
+    "serverUrl": "mongodb+srv://shripatithinktanker:uHVIwxh8vqopAIXe@cluster0.ful0mlg.mongodb.net",
+    "db": "cephelometrics"
+  }
+}

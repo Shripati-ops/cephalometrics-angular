@@ -1,0 +1,31 @@
+<mat-card
+
+  class="content-card file-dropzone"
+>
+<form [formGroup] = "appDataForm">
+  Enter the File Name Here<br><input type = "text" formControlName = "fileName"/><br>
+</form>
+<mat-card-content (click)="fileDropRef.click()">
+  <mat-card-title> Select your file here </mat-card-title>
+  <input
+  hidden
+  multiple
+  #fileDropRef
+  type="file"
+  id="fileDropRef"
+  accept="image/png, image/jpeg"
+  (change)="uploadFile($event)"
+  />
+  <div class="dashed-square">
+    <p>Browse for file</p>
+    <mat-icon>cloud_upload</mat-icon>
+  </div>
+</mat-card-content>
+<!-- <button type = "button" (click) = "submitPayload()"> Submit </button> -->
+</mat-card>
+
+
+
+
+
+

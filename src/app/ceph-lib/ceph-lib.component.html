@@ -1,0 +1,350 @@
+<!-- Navbar starts here -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid ">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="tabBar">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page">Tracing</a>
+        </li>
+        <li class="mx-2 nav-item">
+          <a class="nav-link">Result</a>
+        </li>
+      </ul>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+      <!-- <button class="btn btn-outline-success mx-2  my-2 nav-btn" (click)="submitPayload()"> -->
+      <button class="btn btn-outline-success mx-2" (click)="submitPayload()">
+        <mat-icon class="align-middle">save</mat-icon>
+        <!-- <span class="align-middle">Save</span> -->
+      </button>
+
+      <!-- <button class="btn btn-outline-success" (click)="exportToJPEG()">
+        <mat-icon class="align-middle">cloud_download</mat-icon>
+        <span class="align-middle"> Export as JPEG </span>
+      </button>
+      <button class="btn btn-outline-success" (click)="exportToPDF()">
+        <mat-icon class="align-middle">cloud_download</mat-icon>
+        <span class="align-middle"> Export as PDF </span>
+      </button> -->
+
+
+      <div class="card flex justify-content-end export-div">
+        <p-splitButton label="" icon="pi pi-plus" [model]="items" styleClass="p-button-text"></p-splitButton>
+      </div>
+      <button class="btn btn-outline-success mx-2" (click)="showImageSettings()">
+        <mat-icon class="align-middle">settings</mat-icon>
+      </button>
+      <button class="btn btn-outline-primary ms-1" (click)="resetAllPoints()">
+        <mat-icon class="align-middle"> loop </mat-icon>
+        <!-- <span class="align-middle">Reset</span> -->
+      </button>
+      <button class="btn btn-outline-danger ms-2" (click)="goBackToMainPage()">
+        <mat-icon class="align-middle">cancel</mat-icon>
+        <!-- <span class="align-middle">Cancel</span> -->
+      </button>
+      <p-dialog [(visible)]="showImageSettingsPanel" [modal]="false" [draggable]="true" [resizable]="true">
+        <p-header>
+          Image Settings
+          <input type="button" class="btn btn-outline-primary" (click)="resetAllSettings()" value="Reset" />
+        </p-header>
+
+        <form [formGroup]="imageSettings">
+          Adjust Contrast
+          <input type="range" formControlName="contrastSlider" max="200" min="0"
+            (change)="changeImageSettings('Contrast', $event)" />
+          Adjust Brightness
+          <input type="range" formControlName="brightnessSlider" max="200" min="0"
+            (change)="changeImageSettings('Brightness', $event)" />
+          Adjust Invert
+          <input type="range" formControlName="invertSlider" max="100" min="0"
+            (change)="changeImageSettings('Invert', $event)" />
+        </form>
+      </p-dialog>
+    </div>
+  </div>
+</nav>
+<!-- Navbar end here -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2  col-sm-4 py-2 sidebar-div">
+      <!-- <p class="m-0 p-0 fw-bolder fw-normal">Analysis</p> -->
+      <p class="m-0 p-0  fw-normal">Analysis</p>
+      <select class="form-select my-2 selectDropDown" aria-label="Default select">
+        <option value="1">Steiner</option>
+      </select>
+
+      <div class="overflow-auto sidebar">
+        <div class = "landmark-completion">
+          <p class=" fw-normal mt-2">Select Landmark </p>
+          <label class="container1">
+            <!-- <input type="checkbox"> -->
+            <!-- <input type = "checkbox" formcontrolname="allPointsMarked" class = "clickCheckbox1 isCompleted" [(ngModel)] = "allPointsCompleted" disabled/>  -->
+            <div class="container">
+              <div class="round">
+                <input type="checkbox" class = "isCompleted"checked id="checkbox" [(ngModel)] = "allPointsCompleted" disabled/>
+                <label for="checkbox"></label>
+              </div>
+            </div>
+            <span class="checkmark1"></span>
+          </label>
+         
+      
+        </div>
+        <table class="menu-title" style="
+                    /* margin-top: 30px; */
+                    border-collapse: separate;
+                    border-spacing: 0 15px;
+                  ">
+          <tr *ngFor="let option of options; let i = index">
+            <ng-container *ngIf="option.isActive; else cond2">
+              <td (click)="selectedIndex(i)" id = "idx{{i}}">
+                <!-- new latest code -->
+                <label class="container">
+
+                  <!-- <input type="checkbox"> -->
+                  <ng-container *ngIf = "!option.isActive else addCond">
+                  <input type="checkbox" class="clickCheckbox1" disabled/><a class="link-btns">
+                    {{
+                    option.pointName
+                    }}
+                  </a>
+                  </ng-container>
+                  <ng-template #addCond> 
+                    <input type="checkbox" class="clickCheckbox1" disabled/><a class="link-btns" id = "{{option.pointName | idNameModifier}}" [class.link-btns-active]="i == HighlightRow">
+                      {{
+                      option.pointName
+                      }}
+                    </a>
+                  </ng-template>
+                  <span class="checkmark"></span>
+                </label>
+              </td>
+            </ng-container>
+
+            <ng-template #cond2>
+              <td>
+                <label class="container">
+
+                  
+                  <input type="checkbox" checked disabled /><a class="link-btns-disabled">
+                    {{
+                    option.pointName
+                    }}
+                  </a>
+                  <span class="checkmark"></span>
+                </label>
+              </td>
+              <td></td>
+              <td></td>
+              <td>
+                <!-- <mat-icon (click)="removePoint(i)" style="font-size: 18px; float: right">loop</mat-icon> -->
+                <mat-icon (click)="removePoint(i)" style="font-size: 18px; float: right">refresh</mat-icon>
+              </td>
+            </ng-template>
+          </tr>
+        </table>
+      </div>
+
+
+    </div>
+
+    <div class="col-sm-8 col-md-4 bg-light1 mt-sm-0 mt-5 pt-0  ">
+      <div class=" card py-3 mt-5">
+
+        <div class="ms-auto me-3">
+          <mat-icon class="text-secondary">volume_off</mat-icon>
+          <mat-icon class="text-secondary mx-2">volume_up</mat-icon>
+        </div>
+        <div class="d-flex">
+          <p class="mx-auto card-heading fs-6">{{pointName}}</p>
+        </div>
+        <!-- <h2 class="text-center">{{pointName}}</h2> -->
+        <div class="text-center">
+          
+          <mat-icon class="bg-secondary rounded-circle text-white mx-1">skip_previous</mat-icon>
+          <mat-icon class="bg-secondary rounded-circle text-white mx-1" style = "transform: rotate(180deg);">play_arrow</mat-icon>
+          <mat-icon class="bg-secondary rounded-circle text-white mx-1">play_arrow</mat-icon>
+          <mat-icon class="bg-secondary rounded-circle text-white mx-1">skip_next</mat-icon>
+        </div>
+      </div>
+      <div class="my-4 card ">
+        <img class="middle-img" src="{{previewImage}}" alt="previewImage" />
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12 last-div bg-light1 p-0 mt-5">
+      <!-- <div class="ms-auto p-3 bg-secondary w-100"> -->
+      <div class=" btn-bg rounded mt-2 justify-content-center action-div">
+        <div class="d-flex justify-content-end ">
+          <mat-icon class="m-2 text-secondary " (click)="reset()">refresh</mat-icon>
+          <mat-icon class="m-2 text-secondary" (click)="zoomOut()">zoom_out</mat-icon>
+          <mat-icon class="m-2 text-secondary" (click)="zoomIn()">zoom_in</mat-icon>
+
+        </div>
+      </div>
+      <div class="magnificationFactorInput  d-flex justify-content-end  align-items-center search-input">
+        <p class="my-2 ms-sm-5">
+          <!-- Enter the Magnification Factor in mm = -->
+          Calibration Scale in mm
+        </p>
+        <form [formGroup]="calibrationMagnification">
+          <input type="text" class="my-2 ms-1  inputBox " formControlName="magnificationFactor"/>
+        </form>
+      </div>
+      <!-- <div class="containmentDiv1 mx-auto"> -->
+      <div [ngStyle] = "{ border : '1px', 'border-style': 'solid', 'width' : '40rem'}">
+        <div class="container  mx-auto overlay" (click)="addPoint($event)" (contextmenu)="disableContextMenu()"
+          [ngStyle]="{ cursor: 'crosshair' }" id="image-container">
+          <img class="right-side-img p-2 " src="{{imageURL}}" [ngStyle]="{
+                            filter:
+                              'contrast(' +
+                              contrastSetting +
+                              '%) brightness(' +
+                              brightnessSetting +
+                              '%) invert(' +
+                              invertSetting +
+                              '%)',
+                              'cursor': 'crosshair'}
+                              " />
+
+          <ng-container *ngFor="let points of pointsArray | keyvalue">
+            <span draggable="true" [ngStyle]="{
+                                display: 'block',
+                                position: 'absolute',
+                                width: '7px',
+                                height: '7px',
+                                'background-color': 'white',
+                                'border-radius': '30px',
+                                top: points.value.y + 'px',
+                                left: points.value.x + 'px',
+                                'z-index': 900,
+                                'pointer-events': 'none'
+                              }">
+            </span>
+
+            <span [ngStyle]="{
+                                display: 'block',
+                                position: 'absolute',
+                                'font-size': '20px',
+                                color: 'white',
+                                top: points.value.y + 10 + 'px',
+                                left: points.value.x + 10 + 'px',
+                                'z-index': 900,
+                                'pointer-events': 'none'
+                              }">{{ points.value.point_name_alias }}</span>
+          </ng-container>
+
+          <ng-container *ngFor="let line of lineArr">
+            <ng-container *ngIf="line.id != 'C1-C2' else c1c2line">
+
+              <span [ngStyle]="{
+                                display: 'block',
+                                padding: '0px',
+                                margin: '0px',
+                                height: '2px',
+                                'border-bottom': '1px dashed rgb(227, 227, 227)',
+                                'line-height': '1px',
+                                position: 'absolute',
+                                left: line.x.x_left + 'px',
+                                top: line.x.x_top + 'px',
+                                width: line.x.x_distance + 'px',
+                                transform: 'rotate(' + line.x.x_angle + 'deg)',
+                                'z-index': 900,
+                                'pointer-events': 'none'
+                              }"></span>
+            </ng-container>
+
+            <ng-template #c1c2line>
+              <span [ngStyle]="{
+                                      display: 'block',
+                                      padding: '0px',
+                                      margin: '0px',
+                                      height: '2px',
+                                      'border-bottom': '1px dashed rgb(227, 227, 227)',
+                                      'line-height': '1px',
+                                      position: 'absolute',
+                                      left: line.left! + 3 + 'px',
+                                      top: line.x.x_top + 'px',
+                                      width: line.distance + 'px',
+                                      transform: 'rotate(' + line.angle + 'deg)',
+                                      'z-index': 900,
+                                      'pointer-events': 'none'
+                                    }"></span>
+
+            </ng-template>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+    <!-- <div class="row"> -->
+    <div class="col-md-10 col-sm-12 ms-md-auto pt-5 mt-sm-5">
+      <table class="table table-bordered data-table">
+        <thead>
+          <tr>
+            <th> Measurements </th>
+            <th> Description </th>
+            <th> Clinical Norm </th>
+            <th> Value </th>
+            <th> Difference </th>
+            <th> Deviation </th>
+            <th> Interpretation </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let results of anglesArr">
+            <ng-container *ngIf="results.name != ''">
+              <ng-container *ngIf="results.id != 'C1-C2'">
+                <ng-container *ngIf="results.typeOfMeasurement == 'Angular'; else cond5">
+                  <tr>
+                    <td>{{ results.name }}</td>
+                    <td> {{ results.description }} </td>
+                    <td> {{ results.mean }}° </td>
+                    <ng-container *ngIf="results.value > results.mean; else cond4">
+                      <td>
+                        <span style="color: red">{{ results.value }}° </span>
+                      </td>
+                    </ng-container>
+                    <ng-template #cond4>
+                      <td>
+                        <span style="color: green">{{ results.value }}° </span>
+                      </td>
+                    </ng-template>
+                    <td> {{ "" }} </td>
+                    <td> {{ "" }} </td>
+                    <td>{{ results.interpretation }}</td>
+                  </tr>
+                </ng-container>
+
+                <ng-template #cond5>
+                  <tr>
+                    <td>{{ results.name }}</td>
+                    <td> {{ results.description }} </td>
+                    <td>{{ results.mean }}mm</td>
+                    <ng-container *ngIf="results.value > results.mean; else cond6">
+                      <td>
+                        <span style="color: red">{{ results.value }}mm</span>
+                      </td>
+                    </ng-container>
+                    <ng-template #cond6>
+                      <td>
+                        <span style="color: green">{{ results.value }}mm </span>
+                      </td>
+                    </ng-template>
+                    <td> {{ "" }} </td>
+                    <td> {{ "" }} </td>
+                    <td>{{ results.interpretation }}</td>
+                  </tr>
+                </ng-template>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <!-- </div> -->
+  </div>

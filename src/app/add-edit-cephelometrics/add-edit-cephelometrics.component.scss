@@ -1,0 +1,157 @@
+/* Shake animation */
+@keyframes shake {
+    0% {
+      transform: translate(1px, 1px) rotate(0deg);
+    }
+  
+    10% {
+      transform: translate(-1px, -2px) rotate(-1deg);
+    }
+  
+    20% {
+      transform: translate(-3px, 0px) rotate(1deg);
+    }
+  
+    30% {
+      transform: translate(3px, 2px) rotate(0deg);
+    }
+  
+    40% {
+      transform: translate(1px, -1px) rotate(1deg);
+    }
+  
+    50% {
+      transform: translate(-1px, 2px) rotate(-1deg);
+    }
+  
+    60% {
+      transform: translate(-3px, 1px) rotate(0deg);
+    }
+  
+    70% {
+      transform: translate(3px, 1px) rotate(-1deg);
+    }
+  
+    80% {
+      transform: translate(-1px, -1px) rotate(1deg);
+    }
+  
+    90% {
+      transform: translate(1px, 2px) rotate(0deg);
+    }
+  
+    100% {
+      transform: translate(1px, -2px) rotate(-1deg);
+    }
+  }
+  
+  .fileover {
+    animation: shake 1s;
+    animation-iteration-count: infinite;
+  }
+  
+  .files-list {
+    width: 60%;
+  
+    .single-file {
+      display: flex;
+      padding: 0.5rem;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+  
+      .delete {
+        margin-left: 0.5rem;
+        cursor: pointer;
+        align-self: flex-end;
+      }
+  
+      flex-grow: 1;
+  
+      .name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #b7c6d8;
+        margin: 0;
+      }
+  
+      .size {
+        font-size: 12px;
+        font-weight: 500;
+        color: #a4a4a4;
+        margin: 0;
+        margin-bottom: 0.25rem;
+      }
+  
+      .info {
+        width: 100%;
+      }
+    }
+  }
+  
+  .dashed-square {
+    width: 60%;
+    height: 80%;
+    border: 1px dashed #b7c6d8;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    &:hover {
+      border: dashed 1px #979797;
+      background: #58415813;
+      cursor: pointer;
+    }
+  
+    font-size: 1.6rem;
+    .mat-icon {
+      font-size: 6rem;
+      width: max-content;
+      height: max-content;
+    }
+  
+    min-width: 4rem;
+    min-height: 4rem;
+  
+    margin: 1rem;
+    padding-top: 12px;
+    border-radius: 10px;
+    transform: translateX(30%);
+  }
+  
+  .file-dropzone {
+    // centralize it's content
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  
+    // centralize self
+    min-width: 90%;
+    height: 100%;
+    border-radius: 5px;
+    padding: 1rem;
+    transition: all 0.3s ease-in-out;
+  
+    > mat-card-title {
+      margin: 0%;
+      font-size: 3rem;
+      text-align: start;
+  
+      // fix on top
+      position: absolute;
+      top: 0;
+      margin: 0 auto;
+    }
+  
+    > mat-card-content {
+      padding-top: 4rem;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+    }
+  }
+  
